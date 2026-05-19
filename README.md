@@ -7,8 +7,7 @@ A minimal browser extension that extracts the full DOM of the active page.
 1. Open `chrome://extensions`.
 2. Enable **Developer mode**.
 3. Click **Load unpacked**.
-4. Select this repository folder:
-   `/home/runner/work/dom-parser/dom-parser`
+4. Select the local folder containing this repository.
 
 ## Usage
 

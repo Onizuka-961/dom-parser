@@ -42,8 +42,6 @@ async function extractDomFromActiveTab() {
   outputElement.value = extractedDom;
   downloadButton.disabled = false;
   setStatus('DOM extracted successfully.');
-
-  return activeTab.url || '';
 }
 
 extractButton.addEventListener('click', async () => {
