@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Extractor</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main>
+      <h1>DOM Extractor</h1>
+      <button id="extract-dom" type="button">Extract DOM</button>
+      <button id="download-dom" type="button" disabled>Download .html</button>
+      <p id="status" aria-live="polite"></p>
+      <textarea id="dom-output" readonly placeholder="Extracted DOM will appear here."></textarea>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
