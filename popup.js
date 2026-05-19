@@ -4,6 +4,7 @@ const statusElement = document.getElementById('status');
 const outputElement = document.getElementById('dom-output');
 
 let extractedDom = '';
+let extractedDomSourceUrl = '';
 
 function setStatus(message) {
   statusElement.textContent = message;
@@ -22,6 +23,7 @@ async function extractDomFromActiveTab() {
   setStatus('Extracting...');
   downloadButton.disabled = true;
   extractedDom = '';
+  extractedDomSourceUrl = '';
 
   const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
@@ -39,6 +41,7 @@ async function extractDomFromActiveTab() {
   }
 
   extractedDom = result.result;
+  extractedDomSourceUrl = activeTab.url || '';
   outputElement.value = extractedDom;
   downloadButton.disabled = false;
   setStatus('DOM extracted successfully.');
@@ -48,7 +51,8 @@ extractButton.addEventListener('click', async () => {
   try {
     await extractDomFromActiveTab();
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error.';
+    const message =
+      error instanceof Error ? error.message : 'An unexpected error occurred during DOM extraction.';
     outputElement.value = '';
     setStatus(`Error: ${message}`);
   }
@@ -59,13 +63,12 @@ downloadButton.addEventListener('click', async () => {
     return;
   }
 
-  const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
   const blob = new Blob([extractedDom], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
 
   const a = document.createElement('a');
   a.href = url;
-  a.download = getFileName(activeTab?.url || '');
+  a.download = getFileName(extractedDomSourceUrl);
   a.click();
 
   URL.revokeObjectURL(url);
